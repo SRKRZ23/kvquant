@@ -103,6 +103,17 @@ def my_quantizer(x): ...
   int8 quality gap further).
 - Benchmarked on small models on a laptop. Bring your own model and report back.
 
+## Support
+
+kvquant is free and MIT-licensed. If it saved you GPU memory or an afternoon of
+debugging, a tip keeps the work going — no obligation.
+
+- **GitHub Sponsors:** the ❤ Sponsor button above (once enabled)
+- **BTC:** `bc1q9hm4upksmvkzhl8z3zvxgz94da358qfe3tred0`
+- **ETH / Polygon / USDT (ERC-20):** `0xa9e3b63799f5E5cc6258042D45869a5a1d39F021`
+- **USDT (TRC-20) / TRON:** `TUyNkMXme1CYAc1wZ8SZ64X9upBc9nwTZ5`
+- **Solana:** `j8zZCsWwM8WmUZwMSDHikNuz6E49Vn8nwo9FMQnHSoW`
+
 ## License
 
 MIT.
