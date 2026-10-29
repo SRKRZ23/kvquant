@@ -1,6 +1,6 @@
 # kvquant — launch drafts (honest). Push/Sponsors/PyPI are Sardor's account actions.
 
-Repo: SRKRZ23/kvquant (to create). Enable GitHub Sponsors on the account. `pip install kvquant` after PyPI publish.
+Repo: SRKRZ23/kvquant (to create). Enable GitHub Sponsors on the account. `pip install kvquant-hf` after PyPI publish.
 Honesty: lead with the measured table + the silent-no-op hook; state the v0 scope (fake-quant for quality, real int8 storage for bytes; live-attention int8 pairs with transformers QuantizedCache). No invented numbers; no AI co-author in commits.
 
 ---

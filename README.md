@@ -12,8 +12,8 @@ ones and ships a guard that **proves** the quantization actually bit.
 ## Install
 
 ```bash
-pip install kvquant            # core
-pip install "kvquant[bench]"   # + transformers/numpy for the perplexity benchmark
+pip install kvquant-hf            # core
+pip install "kvquant-hf[bench]"   # + transformers/numpy for the perplexity benchmark
 ```
 
 ## Quickstart

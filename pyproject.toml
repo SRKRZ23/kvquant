@@ -3,7 +3,7 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "kvquant"
+name = "kvquant-hf"
 version = "0.1.0"
 description = "Tested KV-cache quantization for Hugging Face transformers >= 5 (with a silent-no-op stress test)."
 readme = "README.md"
