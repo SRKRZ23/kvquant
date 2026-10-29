@@ -8,9 +8,11 @@ stress test so you can never be fooled.
 from .core import quantize_cache, quantize_dequantize
 from .bench import kv_ppl_sweep
 from .storage import Int8KVStore, cache_bytes, compress_cache
+from .live import make_live_int8, held_bytes
 
 __all__ = [
     "quantize_cache", "quantize_dequantize", "kv_ppl_sweep",
     "Int8KVStore", "cache_bytes", "compress_cache",
+    "make_live_int8", "held_bytes",
 ]
-__version__ = "0.1.0"
+__version__ = "0.2.0"

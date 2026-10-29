@@ -59,3 +59,18 @@ def test_int8_store_saves_bytes_and_reconstructs():
     assert s.nbytes < x.element_size() * x.nelement() / 3.5
     rel = (s.dequantize() - x).abs().mean() / x.abs().mean()
     assert rel < 0.05  # int8 per-token reconstruction stays within a few percent
+
+
+def test_live_int8_cache_holds_int8():
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from kvquant.live import make_live_int8, held_bytes
+    tok = AutoTokenizer.from_pretrained("google/gemma-3-270m-it")
+    m = AutoModelForCausalLM.from_pretrained("google/gemma-3-270m-it", dtype=torch.float32).eval()
+    ids = tok("live int8 cache test " * 8, return_tensors="pt").input_ids[:, :40]
+    with torch.no_grad():
+        cache = m(ids, use_cache=True).past_key_values
+    fp = held_bytes(cache)
+    make_live_int8(cache)
+    assert cache.layers[0]._qk.dtype == torch.int8
+    assert held_bytes(cache) < fp / 3          # real int8 storage, ~4x vs fp32

@@ -67,8 +67,25 @@ print(report)   # {'fp_bytes': 5_824_512, 'int8_bytes': 1_467_504, 'ratio': 3.97
 
 On the gemma cache above (158 tokens, 18 layers): **5,824,512 → 1,467,504 bytes = 3.97×
 smaller vs fp32 (~2× vs fp16)**, ~2% per-tensor reconstruction error. Use it to compress
-a cache for offload / serialization / holding an idle long context; for int8 *during*
-attention, pair this scheme with transformers' `QuantizedCache`.
+a cache for offload / serialization / holding an idle long context.
+
+### Live int8 cache (holds int8 *during* generation)
+
+`make_live_int8` converts a cache so every layer **stores** int8 + a per-token fp16 scale
+and dequantizes on read inside attention — the memory held is really int8, no extra deps:
+
+```python
+from kvquant import make_live_int8, held_bytes
+
+past = None
+for step in decode_loop:
+    out = model(next_token, past_key_values=past, use_cache=True)
+    past = make_live_int8(out.past_key_values)   # cache now holds int8
+```
+
+Measured on `gemma-3-270m-it` (300 tokens, autoregressive): perplexity **+0.74%**, cache
+held as `torch.int8` and **3.97× smaller than fp32 (~2× vs fp16)**. It subclasses each
+layer's own class, so sliding-window and other behaviours are preserved.
 
 ## The silent-no-op guard
 
@@ -94,14 +111,14 @@ def my_quantizer(x): ...
 
 ## Honest limitations (v0)
 
-- Two layers, on purpose: `kv_ppl_sweep` / `quantize_cache` **fake-quantize** (quant→dequant)
+- Three tools, clear jobs: `kv_ppl_sweep` / `quantize_cache` **fake-quantize** (quant→dequant)
   to measure the *quality* cost with the correct non-no-op hook; `compress_cache` /
-  `Int8KVStore` do **real int8 storage** with measured byte savings (above). What's not
-  here yet is reading from int8 *inside attention every step* — for that, pair this scheme
-  with transformers' `QuantizedCache`; it's the roadmap item.
+  `Int8KVStore` do **real int8 storage** for a finished cache; `make_live_int8` holds int8
+  **during** generation. All measured above.
 - Symmetric quantization, no outlier handling or post-RoPE split yet (those shrink the
   int8 quality gap further).
-- Benchmarked on small models on a laptop. Bring your own model and report back.
+- Benchmarked on small models on a laptop (gemma-3-270m). Try it on your model and
+  architecture and report back — especially GQA/MQA and sliding-window variants.
 
 ## Support
 
