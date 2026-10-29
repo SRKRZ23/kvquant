@@ -49,3 +49,13 @@ def test_rankconf_agreement_beats_self():
     self_conf = -0.3 * err + rng.normal(0, 0.3, n)
     agree = -err + rng.normal(0, 0.25, n)
     assert rc.aurc(agree, err) < rc.aurc(self_conf, err)
+
+
+def test_int8_store_saves_bytes_and_reconstructs():
+    from kvquant.storage import Int8KVStore
+    x = torch.randn(1, 4, 128, 64)  # [B, H, seq, head_dim]
+    s = Int8KVStore(x)
+    # ~4x smaller than fp32 (int8 + tiny fp16 per-token scale)
+    assert s.nbytes < x.element_size() * x.nelement() / 3.5
+    rel = (s.dequantize() - x).abs().mean() / x.abs().mean()
+    assert rel < 0.05  # int8 per-token reconstruction stays within a few percent

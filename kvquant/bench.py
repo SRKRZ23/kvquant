@@ -75,7 +75,16 @@ def _main():
         tag = "fp (baseline)" if bits is None else f"int{bits}"
         print(f"  {tag:14s} ppl={r['ppl']:.4f}  dppl={r['delta_pct']:+.3f}%  "
               f"change={r['change']:.3f}")
-    print("int8 KV = ~2x less cache memory; the delta above is the quality cost.")
+    # real, measured memory saving from int8 storage on a populated cache
+    import torch as _t
+    from .storage import compress_cache
+    with _t.no_grad():
+        ids = tok(DEFAULT_TEXT, return_tensors="pt").input_ids[:, : args.tokens]
+        dev = next(model.parameters()).device
+        cache = model(ids.to(dev), use_cache=True).past_key_values
+    _, mem = compress_cache(cache)
+    print(f"  int8 storage: {mem['fp_bytes']:,} -> {mem['int8_bytes']:,} bytes "
+          f"= {mem['ratio']:.2f}x smaller vs fp32 (~{mem['ratio']/2:.2f}x vs fp16).")
 
 
 if __name__ == "__main__":

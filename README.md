@@ -54,6 +54,22 @@ int8 K/V carries **half** the bytes of fp16 (a quarter of fp32), so an int8 cach
 the obvious lever for longer context / larger batch at near-zero quality cost. Run the
 sweep on *your* model — numbers vary by architecture.
 
+### Real memory, measured (not just quality)
+
+`kvquant.compress_cache` stores a populated cache as int8 + a per-token fp16 scale and
+reports the actual byte reduction:
+
+```python
+from kvquant import compress_cache
+stores, report = compress_cache(past_key_values)
+print(report)   # {'fp_bytes': 5_824_512, 'int8_bytes': 1_467_504, 'ratio': 3.97}
+```
+
+On the gemma cache above (158 tokens, 18 layers): **5,824,512 → 1,467,504 bytes = 3.97×
+smaller vs fp32 (~2× vs fp16)**, ~2% per-tensor reconstruction error. Use it to compress
+a cache for offload / serialization / holding an idle long context; for int8 *during*
+attention, pair this scheme with transformers' `QuantizedCache`.
+
 ## The silent-no-op guard
 
 `kv_ppl_sweep` asserts that int2 both changes the tensors (`change > 0`) **and** wrecks
@@ -78,12 +94,13 @@ def my_quantizer(x): ...
 
 ## Honest limitations (v0)
 
-- This is **fake-quantization**: it quantizes then dequantizes, so it measures the
-  *quality* cost of an int cache and gives you the correct, non-no-op hook. It does not
-  yet *store* int8 in memory — for real memory savings pair it with an int8-storage cache
-  (e.g. `transformers`' own `QuantizedCache`), which is on the roadmap here.
-- Per-channel symmetric quantization along the sequence axis; no outlier handling or
-  post-RoPE split yet (those shrink the int8 gap further).
+- Two layers, on purpose: `kv_ppl_sweep` / `quantize_cache` **fake-quantize** (quant→dequant)
+  to measure the *quality* cost with the correct non-no-op hook; `compress_cache` /
+  `Int8KVStore` do **real int8 storage** with measured byte savings (above). What's not
+  here yet is reading from int8 *inside attention every step* — for that, pair this scheme
+  with transformers' `QuantizedCache`; it's the roadmap item.
+- Symmetric quantization, no outlier handling or post-RoPE split yet (those shrink the
+  int8 quality gap further).
 - Benchmarked on small models on a laptop. Bring your own model and report back.
 
 ## License
