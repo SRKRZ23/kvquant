@@ -108,6 +108,12 @@ def my_quantizer(x): ...
 - **`kvquant.rankconf`** — confidence utilities for rank metrics (AURC/risk-coverage):
   `aurc`, `is_rank_noop` (any strictly-monotonic rescale is a no-op for a rank metric),
   and `agreement_confidence` (a stronger signal than a model's self-reported confidence).
+- **`quantize_dequantize_outlier` + `effective_bits`** — int4 that keeps the few
+  highest-magnitude key *channels* in full precision (naive int4 wastes its whole range on
+  them). `effective_bits(4, 4, 64)` = **4.75 bits/elem** — report that, not a bare "int4".
+  Validated offline on synthetic keys, incl. a **pre-vs-post-RoPE** test showing RoPE spreads
+  the outliers, so you must validate on the post-RoPE keys the cache actually stores and budget
+  more outlier channels for them. Real-model run: `examples/serving_cost/outlier_int4_kv.py`.
 
 ## Honest limitations (v0)
 
@@ -115,8 +121,9 @@ def my_quantizer(x): ...
   to measure the *quality* cost with the correct non-no-op hook; `compress_cache` /
   `Int8KVStore` do **real int8 storage** for a finished cache; `make_live_int8` holds int8
   **during** generation. All measured above.
-- Symmetric quantization, no outlier handling or post-RoPE split yet (those shrink the
-  int8 quality gap further).
+- Outlier-aware int4 (`quantize_dequantize_outlier`) is **fake-quant for quality measurement**
+  and validated offline; the real-GQA, real-memory int4 store is the next roadmap item (needs
+  a datacenter GPU to measure at scale — MI300X).
 - Benchmarked on small models on a laptop (gemma-3-270m). Try it on your model and
   architecture and report back — especially GQA/MQA and sliding-window variants.
 

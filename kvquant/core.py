@@ -26,6 +26,40 @@ def quantize_dequantize(x: torch.Tensor, bits: int = 8, axis: int = -2) -> torch
     return torch.round(x / s).clamp(-lv, lv) * s
 
 
+def quantize_dequantize_outlier(x: torch.Tensor, bits: int = 4, n_outlier: int = 4,
+                                axis: int = -2) -> torch.Tensor:
+    """Per-channel fake-quant to ``bits``, but keep the ``n_outlier`` highest-magnitude
+    *channels* (last axis, e.g. head_dim) in full precision.
+
+    KV keys carry a few persistent high-magnitude channels; naive int4 wastes its whole
+    range on them and shreds the rest. Keeping those few channels in fp16 while int4-ing
+    the others recovers most of the quality at close to int4 memory (see
+    :func:`effective_bits`). Channels are ranked by per-channel ``max|.|`` over ``axis``.
+    ``n_outlier <= 0`` reduces to plain :func:`quantize_dequantize`.
+    """
+    qx = quantize_dequantize(x, bits=bits, axis=axis)
+    if n_outlier <= 0:
+        return qx
+    mag = x.abs().amax(dim=axis)                       # [..., channels]
+    k = min(int(n_outlier), x.shape[-1])
+    idx = mag.topk(k, dim=-1).indices
+    mask = torch.zeros_like(mag, dtype=torch.bool).scatter(-1, idx, True).unsqueeze(axis)
+    return torch.where(mask, x, qx)                    # outlier channels stay full precision
+
+
+def effective_bits(bits: int, n_outlier: int, head_dim: int, fp_bits: int = 16) -> float:
+    """Average bits/element when ``n_outlier`` of ``head_dim`` channels stay at ``fp_bits``
+    and the rest use ``bits``. (The per-channel scale overhead is tiny and ignored.)
+
+    e.g. ``effective_bits(4, 4, 64)`` -> ``(4*60 + 16*4)/64`` = ``4.75`` bits/element.
+    Use this to report the honest cost of the outlier scheme, not a bare "int4".
+    """
+    if head_dim <= 0:
+        raise ValueError("head_dim must be positive")
+    k = min(int(n_outlier), head_dim)
+    return (bits * (head_dim - k) + fp_bits * k) / head_dim
+
+
 def quantize_cache(cache, bits: int = 8) -> float:
     """In-place int-``bits`` quantization of a transformers>=5 ``Cache``.
 
