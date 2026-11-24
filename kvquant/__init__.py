@@ -10,11 +10,12 @@ from .core import (quantize_cache, quantize_dequantize,
 from .bench import kv_ppl_sweep
 from .storage import Int8KVStore, cache_bytes, compress_cache
 from .live import make_live_int8, held_bytes
+from .live4 import make_live_int4, held_bytes4
 
 __all__ = [
     "quantize_cache", "quantize_dequantize",
     "quantize_dequantize_outlier", "effective_bits", "kv_ppl_sweep",
     "Int8KVStore", "cache_bytes", "compress_cache",
-    "make_live_int8", "held_bytes",
+    "make_live_int8", "held_bytes", "make_live_int4", "held_bytes4",
 ]
 __version__ = "0.2.0"
