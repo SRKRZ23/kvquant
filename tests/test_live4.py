@@ -78,3 +78,25 @@ def test_generate_tiny_qwen2():
     assert rel < 0.15, rel
     fp_bytes = sum(2 * l.keys.element_size() * l.keys.nelement() for l in c_fp.layers)
     assert fp_bytes / held_bytes4(c_q) > 2.5   # fp32 tiny model, head_dim 32, residual included
+
+
+def test_prefill_attends_in_full_precision():
+    """Regression (gate 0, 2026-11-25): the prompt must attend to itself at full precision; only the stored copy is
+    4-bit. Before the fix, update() returned the quantized new tokens, so prefill logits already differed and real
+    int4 scored below simulated int4 on LongBench."""
+    pytest.importorskip("transformers")
+    from transformers import Qwen2Config, Qwen2ForCausalLM, DynamicCache
+    torch.manual_seed(0)
+    cfg = Qwen2Config(vocab_size=128, hidden_size=128, intermediate_size=256, num_hidden_layers=2,
+                      num_attention_heads=4, num_key_value_heads=2, max_position_embeddings=1024)
+    m = Qwen2ForCausalLM(cfg).eval()
+    ids = torch.randint(0, 128, (1, 300))
+    with torch.no_grad():
+        ref = m(ids, past_key_values=DynamicCache(config=cfg), use_cache=True).logits
+        c4 = make_live_int4(DynamicCache(config=cfg))
+        got = m(ids, past_key_values=c4, use_cache=True).logits
+        assert torch.equal(got, ref)                       # prefill identical: no 4-bit inside the prompt
+        assert held_bytes4(c4) < sum(2 * l._k4.length() for l in c4.layers) * 128 * 4  # but stored as int4
+        nxt = got[:, -1:].argmax(-1)
+        step = m(nxt, past_key_values=c4, use_cache=True).logits    # decode reads the 4-bit past
+        assert step.shape == (1, 1, 128) and c4.get_seq_length() == 301

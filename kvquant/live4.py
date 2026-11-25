@@ -157,9 +157,16 @@ def _variant(base):
             # one dequantization per layer per step (the base class would read keys/values again)
             if not getattr(self, "is_initialized", True):
                 self.lazy_initialization(key_states, value_states)
+            # Attention for THIS step uses the stored past (dequantized) plus the new tokens at full precision,
+            # as KIVI and serving stacks do: the prompt attends to itself in the original dtype during prefill and
+            # only the STORED copy is 4-bit. Returning the quantized new tokens made prefill attend to 4-bit
+            # keys/values and compounded the error through the layers (gate 0, 2026-11-25: real < simulated).
+            past_k, past_v = self._k4.get(), self._v4.get()
             self._k4.append(key_states)
             self._v4.append(value_states)
-            return self._k4.get(), self._v4.get()
+            if past_k is None or past_k.numel() == 0:
+                return key_states, value_states
+            return torch.cat([past_k, key_states], dim=-2), torch.cat([past_v, value_states], dim=-2)
 
         def get_seq_length(self, *args, **kwargs) -> int:
             return self._k4.length()
