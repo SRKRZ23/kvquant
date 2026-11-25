@@ -1,0 +1,70 @@
+STEP env 0.27.1 2.11.0+gitd0c8b1f 7.2.53211
+
+
+============================ ROCm System Management Interface ============================
+================================== Memory Usage (Bytes) ==================================
+GPU[0]		: VRAM Total Memory (B): 205822885888
+GPU[0]		: VRAM Total Used Memory (B): 299687936
+==========================================================================================
+====================================== Product Info ======================================
+GPU[0]		: get_name, Error when calling libdrm
+GPU[0]		: Card Series: 		N/A
+GPU[0]		: Card Model: 		0x74b5
+GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]		: Card SKU: 		M3000100
+GPU[0]		: Subsystem ID: 	0x74a1
+GPU[0]		: Device Rev: 		0x00
+GPU[0]		: Node ID: 		1
+GPU[0]		: GUID: 		21947
+GPU[0]		: GFX Version: 		gfx942
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=auto
+WARNING 11-25 11:48:26 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=715) WARNING 11-25 11:48:38 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=715) INFO 11-25 11:49:09 [kv_cache_utils.py:2235] GPU KV cache size: 2,886,336 tokens
+(EngineCore pid=715) INFO 11-25 11:49:09 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 88.08x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct auto 3500 4.4
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct auto 32000 4.76
+RESULT THRU Qwen/Qwen2.5-7B-Instruct auto 1123.5
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto multifieldqa_en 0.4865
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto hotpotqa 0.4137
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto 2wikimqa 0.3986
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct auto {'kv_cache_tokens': 2886336, 'max_concurrency': 88.08, 'kv_cache_gib': 154.15}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8
+WARNING 11-25 11:50:44 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=1124) WARNING 11-25 11:50:57 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=1124) INFO 11-25 11:51:16 [kv_cache_utils.py:2235] GPU KV cache size: 5,772,688 tokens
+(EngineCore pid=1124) INFO 11-25 11:51:16 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 176.17x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8 3500 4.4
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8 32000 4.53
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8 1183.4
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8 multifieldqa_en 0.2453
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8 hotpotqa 0.2762
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8 2wikimqa 0.2651
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8 {'kv_cache_tokens': 5772688, 'max_concurrency': 176.17, 'kv_cache_gib': 154.15}
+STEP engine Qwen/Qwen2.5-72B-Instruct kv=auto
+WARNING 11-25 11:52:44 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=1483) WARNING 11-25 11:52:57 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=1483) INFO 11-25 11:55:05 [kv_cache_utils.py:2235] GPU KV cache size: 103,936 tokens
+(EngineCore pid=1483) INFO 11-25 11:55:05 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 3.17x
+RESULT SPEED Qwen/Qwen2.5-72B-Instruct auto 3500 37.38
+RESULT SPEED Qwen/Qwen2.5-72B-Instruct auto 32000 39.75
+RESULT THRU Qwen/Qwen2.5-72B-Instruct auto 159.7
+RESULT F1 Qwen/Qwen2.5-72B-Instruct auto multifieldqa_en 0.4923
+RESULT F1 Qwen/Qwen2.5-72B-Instruct auto hotpotqa 0.5197
+RESULT F1 Qwen/Qwen2.5-72B-Instruct auto 2wikimqa 0.4576
+RESULT CAPACITY Qwen/Qwen2.5-72B-Instruct auto {'kv_cache_tokens': 103936, 'max_concurrency': 3.17, 'kv_cache_gib': 31.72}
+STEP engine Qwen/Qwen2.5-72B-Instruct kv=fp8
+WARNING 11-25 12:04:01 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=2279) WARNING 11-25 12:04:14 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=2279) INFO 11-25 12:05:32 [kv_cache_utils.py:2235] GPU KV cache size: 207,872 tokens
+(EngineCore pid=2279) INFO 11-25 12:05:32 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 6.34x
+RESULT SPEED Qwen/Qwen2.5-72B-Instruct fp8 3500 37.06
+RESULT SPEED Qwen/Qwen2.5-72B-Instruct fp8 32000 38.38
+RESULT THRU Qwen/Qwen2.5-72B-Instruct fp8 174.6
+RESULT F1 Qwen/Qwen2.5-72B-Instruct fp8 multifieldqa_en 0.4902
+RESULT F1 Qwen/Qwen2.5-72B-Instruct fp8 hotpotqa 0.5127
+RESULT F1 Qwen/Qwen2.5-72B-Instruct fp8 2wikimqa 0.4515
+RESULT CAPACITY Qwen/Qwen2.5-72B-Instruct fp8 {'kv_cache_tokens': 207872, 'max_concurrency': 6.34, 'kv_cache_gib': 31.72}
+STEP done

@@ -87,6 +87,28 @@ Measured on `gemma-3-270m-it` (300 tokens, autoregressive): perplexity **+0.74%*
 held as `torch.int8` and **3.97× smaller than fp32 (~2× vs fp16)**. It subclasses each
 layer's own class, so sliding-window and other behaviours are preserved.
 
+### Live int4 cache, measured on an AMD Instinct MI300X
+
+```python
+from kvquant.live4 import make_live_int4
+cache = make_live_int4(DynamicCache(config=model.config))   # keys per channel (128-token groups), values per token
+out = model.generate(**inputs, past_key_values=cache, max_new_tokens=64)
+```
+
+Qwen2.5-7B-Instruct, LongBench (100 questions per task, contexts capped at 3,500 tokens), one MI300X:
+
+| cache | multifieldqa_en | hotpotqa | 2wikimqa | users with 32k-token contexts |
+|---|---|---|---|---|
+| bf16 | 0.487 | 0.399 | 0.395 | 99 |
+| live int4 | 0.499 | 0.421 | 0.398 | 357 |
+
+On Qwen2.5-72B the same GPU holds 19 users in int4 against 4 in bf16. The prompt attends to itself in full precision
+during prefill; only the stored copy is 4-bit. An experimental fused Triton decode kernel (`kvquant.fused4`) reads the
+packed codes directly: per layer at 32k tokens 393 us vs 1,470 us for PyTorch bf16 SDPA, but it is still slower than
+bf16 at short contexts and slower than a tuned serving kernel such as vLLM's. Full results, the vLLM KV-dtype
+comparison on the same GPU (fp8 at default settings halves Qwen2.5-7B's score; `--kv-cache-dtype-skip-layers 0`
+fixes it) and every script: [`bench/mi300x-2026-11/`](bench/mi300x-2026-11/).
+
 ## The silent-no-op guard
 
 `kv_ppl_sweep` asserts that int2 both changes the tensors (`change > 0`) **and** wrecks
@@ -122,8 +144,9 @@ def my_quantizer(x): ...
   `Int8KVStore` do **real int8 storage** for a finished cache; `make_live_int8` holds int8
   **during** generation. All measured above.
 - Outlier-aware int4 (`quantize_dequantize_outlier`) is **fake-quant for quality measurement**
-  and validated offline; the real-GQA, real-memory int4 store is the next roadmap item (needs
-  a datacenter GPU to measure at scale — MI300X).
+  and validated offline. The real int4 store is `make_live_int4` (measured on MI300X above).
+- `kvquant.fused4` is experimental: ROCm/CUDA Triton only, faster than PyTorch bf16 attention from ~16k tokens,
+  slower below that.
 - Benchmarked on small models on a laptop (gemma-3-270m). Try it on your model and
   architecture and report back — especially GQA/MQA and sliding-window variants.
 

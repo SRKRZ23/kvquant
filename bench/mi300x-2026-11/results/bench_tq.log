@@ -1,0 +1,140 @@
+STEP env 0.27.1 2.11.0+gitd0c8b1f 7.2.53211
+
+
+============================ ROCm System Management Interface ============================
+================================== Memory Usage (Bytes) ==================================
+GPU[0]		: VRAM Total Memory (B): 205822885888
+GPU[0]		: VRAM Total Used Memory (B): 299687936
+==========================================================================================
+====================================== Product Info ======================================
+GPU[0]		: get_name, Error when calling libdrm
+GPU[0]		: Card Series: 		N/A
+GPU[0]		: Card Model: 		0x74b5
+GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]		: Card SKU: 		M3000100
+GPU[0]		: Subsystem ID: 	0x74a1
+GPU[0]		: Device Rev: 		0x00
+GPU[0]		: Node ID: 		1
+GPU[0]		: GUID: 		21947
+GPU[0]		: GFX Version: 		gfx942
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=turboquant_4bit_nc
+WARNING 11-25 12:31:10 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=5048) WARNING 11-25 12:31:23 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=5048) INFO 11-25 12:31:34 [kv_cache_utils.py:2235] GPU KV cache size: 7,909,984 tokens
+(EngineCore pid=5048) INFO 11-25 12:31:34 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 241.39x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 3500 6.62
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 32000 17.54
+RESULT THRU Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 591.7
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc multifieldqa_en 0.4945
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc hotpotqa 0.3629
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 2wikimqa 0.3332
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc {'kv_cache_tokens': 7909984, 'max_concurrency': 241.39, 'kv_cache_gib': 155.11}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_skipb
+WARNING 11-25 12:33:06 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=5432) WARNING 11-25 12:33:19 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=5432) INFO 11-25 12:33:39 [kv_cache_utils.py:2235] GPU KV cache size: 5,051,104 tokens
+(EngineCore pid=5432) INFO 11-25 12:33:39 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 154.15x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skipb 3500 4.4
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skipb 32000 4.51
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skipb 1197.2
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skipb multifieldqa_en 0.4992
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skipb hotpotqa 0.4169
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skipb 2wikimqa 0.3975
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_skipb {'kv_cache_tokens': 5051104, 'max_concurrency': 154.15, 'kv_cache_gib': 154.15}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=int4_per_token_head
+WARNING 11-25 12:35:08 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=5794) WARNING 11-25 12:35:20 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=5794) INFO 11-25 12:35:40 [kv_cache_utils.py:2235] GPU KV cache size: 10,866,240 tokens
+(EngineCore pid=5794) INFO 11-25 12:35:40 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 331.61x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct int4_per_token_head 3500 7.7
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct int4_per_token_head 32000 14.22
+RESULT THRU Qwen/Qwen2.5-7B-Instruct int4_per_token_head 1195.3
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head multifieldqa_en 0.0087
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head hotpotqa 0.0008
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head 2wikimqa 0.001
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct int4_per_token_head {'kv_cache_tokens': 10866240, 'max_concurrency': 331.61, 'kv_cache_gib': 154.15}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_skip0
+WARNING 11-25 12:38:15 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=6171) WARNING 11-25 12:38:28 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=6171) INFO 11-25 12:38:47 [kv_cache_utils.py:2235] GPU KV cache size: 5,573,632 tokens
+(EngineCore pid=6171) INFO 11-25 12:38:47 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 170.09x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 3500 4.37
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 32000 4.61
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skip0 1177.3
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 multifieldqa_en 0.4947
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 hotpotqa 0.4102
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 2wikimqa 0.3996
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_skip0 {'kv_cache_tokens': 5573632, 'max_concurrency': 170.09, 'kv_cache_gib': 154.15}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_skipb_aiter
+WARNING 11-25 12:40:17 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=6533) WARNING 11-25 12:40:29 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=6533) INFO 11-25 12:40:49 [kv_cache_utils.py:2235] GPU KV cache size: 5,051,104 tokens
+(EngineCore pid=6533) INFO 11-25 12:40:49 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 154.15x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skipb_aiter 3500 4.38
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skipb_aiter 32000 4.63
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skipb_aiter 2161.4
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skipb_aiter multifieldqa_en 0.4816
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skipb_aiter hotpotqa 0.4082
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skipb_aiter 2wikimqa 0.365
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_skipb_aiter {'kv_cache_tokens': 5051104, 'max_concurrency': 154.15, 'kv_cache_gib': 154.15}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=int4_per_token_head_skipb
+WARNING 11-25 12:42:38 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=7799) WARNING 11-25 12:42:50 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=7799) INFO 11-25 12:43:10 [kv_cache_utils.py:2235] GPU KV cache size: 7,789,632 tokens
+(EngineCore pid=7799) INFO 11-25 12:43:10 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 237.72x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct int4_per_token_head_skipb 3500 8.13
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct int4_per_token_head_skipb 32000 21.13
+RESULT THRU Qwen/Qwen2.5-7B-Instruct int4_per_token_head_skipb 1042.0
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head_skipb multifieldqa_en 0.4917
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head_skipb hotpotqa 0.3927
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head_skipb 2wikimqa 0.3881
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct int4_per_token_head_skipb {'kv_cache_tokens': 7789632, 'max_concurrency': 237.72, 'kv_cache_gib': 154.15}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=turboquant_k8v4
+WARNING 11-25 12:45:46 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=8197) WARNING 11-25 12:45:58 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=8197) INFO 11-25 12:46:18 [kv_cache_utils.py:2235] GPU KV cache size: 6,128,352 tokens
+(EngineCore pid=8197) INFO 11-25 12:46:18 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 187.02x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct turboquant_k8v4 3500 6.1
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct turboquant_k8v4 32000 17.97
+RESULT THRU Qwen/Qwen2.5-7B-Instruct turboquant_k8v4 653.4
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_k8v4 multifieldqa_en 0.4938
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_k8v4 hotpotqa 0.3871
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_k8v4 2wikimqa 0.3457
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct turboquant_k8v4 {'kv_cache_tokens': 6128352, 'max_concurrency': 187.02, 'kv_cache_gib': 154.15}
+STEP done
+STEP env 0.27.1 2.11.0+gitd0c8b1f 7.2.53211
+
+
+============================ ROCm System Management Interface ============================
+================================== Memory Usage (Bytes) ==================================
+GPU[0]		: VRAM Total Memory (B): 205822885888
+GPU[0]		: VRAM Total Used Memory (B): 55452020736
+==========================================================================================
+====================================== Product Info ======================================
+GPU[0]		: get_name, Error when calling libdrm
+GPU[0]		: Card Series: 		N/A
+GPU[0]		: Card Model: 		0x74b5
+GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]		: Card SKU: 		M3000100
+GPU[0]		: Subsystem ID: 	0x74a1
+GPU[0]		: Device Rev: 		0x00
+GPU[0]		: Node ID: 		1
+GPU[0]		: GUID: 		21947
+GPU[0]		: GFX Version: 		gfx942
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+STEP engine Qwen/Qwen2.5-72B-Instruct kv=turboquant_4bit_nc
+WARNING 11-25 12:47:46 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=8605) WARNING 11-25 12:47:59 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=8605) INFO 11-25 12:49:16 [kv_cache_utils.py:2235] GPU KV cache size: 348,032 tokens
+(EngineCore pid=8605) INFO 11-25 12:49:16 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 10.62x
+RESULT SPEED Qwen/Qwen2.5-72B-Instruct turboquant_4bit_nc 3500 45.38
+RESULT SPEED Qwen/Qwen2.5-72B-Instruct turboquant_4bit_nc 32000 91.47
+RESULT THRU Qwen/Qwen2.5-72B-Instruct turboquant_4bit_nc 83.5
+RESULT F1 Qwen/Qwen2.5-72B-Instruct turboquant_4bit_nc multifieldqa_en 0.4511
+RESULT F1 Qwen/Qwen2.5-72B-Instruct turboquant_4bit_nc hotpotqa 0.4493
+RESULT F1 Qwen/Qwen2.5-72B-Instruct turboquant_4bit_nc 2wikimqa 0.3865
+RESULT CAPACITY Qwen/Qwen2.5-72B-Instruct turboquant_4bit_nc {'kv_cache_tokens': 348032, 'max_concurrency': 10.62, 'kv_cache_gib': 31.72}
+STEP done

@@ -1,0 +1,33 @@
+STEP env 0.27.1 2.11.0+gitd0c8b1f 7.2.53211
+
+
+============================ ROCm System Management Interface ============================
+================================== Memory Usage (Bytes) ==================================
+GPU[0]		: VRAM Total Memory (B): 205822885888
+GPU[0]		: VRAM Total Used Memory (B): 189014020096
+==========================================================================================
+====================================== Product Info ======================================
+GPU[0]		: get_name, Error when calling libdrm
+GPU[0]		: Card Series: 		N/A
+GPU[0]		: Card Model: 		0x74b5
+GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]		: Card SKU: 		M3000100
+GPU[0]		: Subsystem ID: 	0x74a1
+GPU[0]		: Device Rev: 		0x00
+GPU[0]		: Node ID: 		1
+GPU[0]		: GUID: 		21947
+GPU[0]		: GFX Version: 		gfx942
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=turboquant_4bit_nc
+WARNING 11-25 12:29:25 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=4250) WARNING 11-25 12:29:38 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=4250) ERROR 11-25 12:29:39 [core.py:1349]     raise ValueError(
+1-25 12:29:39 [core.py:1349] ValueError: Free memory on device cuda:0 (13.88/191.69 GiB) on startup is less than desired GPU memory utilization (0.9, 172.52 GiB). Decrease GPU memory utilization or reduce GPU memory used by other processes.
+(EngineCore pid=4250)     raise ValueError(
+(EngineCore pid=4250) ValueError: Free memory on device cuda:0 (13.88/191.69 GiB) on startup is less than desired GPU memory utilization (0.9, 172.52 GiB). Decrease GPU memory utilization or reduce GPU memoRESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 2wikimqa 0.3332
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc {'kv_cache_tokens': 7860672, 'max_concurrency': 239.89, 'kv_cache_gib': 154.15}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=int4_per_token_head
+b': None}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_skipb
+WARNING 11-25 12:29:50 [import_utils.py:408] ValueError: humming.__spec__ is None

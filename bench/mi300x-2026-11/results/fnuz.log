@@ -1,0 +1,13 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/339 [00:00<?, ?it/s]Loading weights: 100%|██████████| 339/339 [00:00<00:00, 12332.02it/s]
+PROMPT 0 tokens 1734 max k_amax 420.0 {'fn_s1': 0.1367, 'fnuz_s1': 0.135, 'fnuz_s2': 0.1367, 'fnuz_cal': 0.1179}
+PROMPT 1 tokens 2062 max k_amax 420.0 {'fn_s1': 0.1352, 'fnuz_s1': 0.1347, 'fnuz_s2': 0.1352, 'fnuz_cal': 0.1259}
+PROMPT 2 tokens 2071 max k_amax 420.0 {'fn_s1': 0.1451, 'fnuz_s1': 0.1375, 'fnuz_s2': 0.1451, 'fnuz_cal': 0.1236}
+PROMPT 3 tokens 2098 max k_amax 418.0 {'fn_s1': 0.1433, 'fnuz_s1': 0.1357, 'fnuz_s2': 0.1433, 'fnuz_cal': 0.1179}
+PROMPT 4 tokens 2066 max k_amax 420.0 {'fn_s1': 0.141, 'fnuz_s1': 0.1379, 'fnuz_s2': 0.141, 'fnuz_cal': 0.1197}
+PROMPT 5 tokens 2068 max k_amax 420.0 {'fn_s1': 0.1439, 'fnuz_s1': 0.138, 'fnuz_s2': 0.1439, 'fnuz_cal': 0.1217}
+RESULT fn_s1 mean_rel_err 0.14085 max 0.74486
+RESULT fnuz_s1 mean_rel_err 0.13646 max 0.62242
+RESULT fnuz_s2 mean_rel_err 0.14085 max 0.74486
+RESULT fnuz_cal mean_rel_err 0.12111 max 0.69649
+RESULT layers K>240 [27] K>448 []

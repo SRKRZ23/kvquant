@@ -1,0 +1,46 @@
+STEP env 0.27.1 2.11.0+gitd0c8b1f 7.2.53211
+
+
+============================ ROCm System Management Interface ============================
+================================== Memory Usage (Bytes) ==================================
+GPU[0]		: VRAM Total Memory (B): 205822885888
+GPU[0]		: VRAM Total Used Memory (B): 299687936
+==========================================================================================
+====================================== Product Info ======================================
+GPU[0]		: get_name, Error when calling libdrm
+GPU[0]		: Card Series: 		N/A
+GPU[0]		: Card Model: 		0x74b5
+GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]		: Card SKU: 		M3000100
+GPU[0]		: Subsystem ID: 	0x74a1
+GPU[0]		: Device Rev: 		0x00
+GPU[0]		: Node ID: 		1
+GPU[0]		: GUID: 		21947
+GPU[0]		: GFX Version: 		gfx942
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_calib
+WARNING 11-25 12:14:39 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=2928) WARNING 11-25 12:14:52 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=2928) INFO 11-25 12:15:15 [kv_cache_utils.py:2235] GPU KV cache size: 5,771,808 tokens
+(EngineCore pid=2928) INFO 11-25 12:15:15 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 176.14x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_calib 3500 4.54
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_calib 32000 4.6
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_calib 1239.7
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_calib multifieldqa_en 0.1993
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_calib hotpotqa 0.1497
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_calib 2wikimqa 0.2234
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_calib {'kv_cache_tokens': 5771808, 'max_concurrency': 176.14, 'kv_cache_gib': 154.12}
+STEP engine Qwen/Qwen2.5-72B-Instruct kv=fp8_calib
+WARNING 11-25 12:16:44 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=3293) WARNING 11-25 12:16:58 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=3293) INFO 11-25 12:18:19 [kv_cache_utils.py:2235] GPU KV cache size: 207,712 tokens
+(EngineCore pid=3293) INFO 11-25 12:18:19 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 6.34x
+RESULT SPEED Qwen/Qwen2.5-72B-Instruct fp8_calib 3500 37.26
+RESULT SPEED Qwen/Qwen2.5-72B-Instruct fp8_calib 32000 39.04
+RESULT THRU Qwen/Qwen2.5-72B-Instruct fp8_calib 168.6
+RESULT F1 Qwen/Qwen2.5-72B-Instruct fp8_calib multifieldqa_en 0.4808
+RESULT F1 Qwen/Qwen2.5-72B-Instruct fp8_calib hotpotqa 0.5166
+RESULT F1 Qwen/Qwen2.5-72B-Instruct fp8_calib 2wikimqa 0.4413
+RESULT CAPACITY Qwen/Qwen2.5-72B-Instruct fp8_calib {'kv_cache_tokens': 207712, 'max_concurrency': 6.34, 'kv_cache_gib': 31.7}
+STEP done
