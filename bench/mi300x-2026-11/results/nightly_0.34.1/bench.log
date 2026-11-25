@@ -1,0 +1,66 @@
+STEP env 0.34.1rc1.dev100+gc2cc003c5 2.13.0+rocm10.0.0 7.15.26333
+
+
+============================ ROCm System Management Interface ============================
+================================== Memory Usage (Bytes) ==================================
+GPU[0]		: VRAM Total Memory (B): 205822885888
+GPU[0]		: VRAM Total Used Memory (B): 299687936
+==========================================================================================
+====================================== Product Info ======================================
+GPU[0]		: Card Series: 		AMD Instinct MI300X VF
+GPU[0]		: Card Model: 		0x74b5
+GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]		: Card SKU: 		M3000100
+GPU[0]		: Subsystem ID: 	0x74a1
+GPU[0]		: Device Rev: 		0x00
+GPU[0]		: Node ID: 		1
+GPU[0]		: GUID: 		21947
+GPU[0]		: GFX Version: 		gfx942
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=auto
+(EngineCore pid=227) INFO 11-25 13:12:15 [kv_cache_utils.py:1218] GPU KV cache size: 2,865,152 tokens, Maximum concurrency for 32,768 tokens per request: 87.44x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct auto 3500 4.22
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct auto 32000 4.72
+RESULT THRU Qwen/Qwen2.5-7B-Instruct auto 1181.9
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto multifieldqa_en 0.4862
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto hotpotqa 0.4054
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto 2wikimqa 0.3982
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct auto {'kv_cache_tokens': 2865152, 'max_concurrency': 87.44, 'kv_cache_gib': 155.4}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8
+(EngineCore pid=387) INFO 11-25 13:14:24 [kv_cache_utils.py:1218] GPU KV cache size: 5,730,304 tokens, Maximum concurrency for 32,768 tokens per request: 174.88x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8 3500 4.28
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8 32000 4.64
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8 767.0
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8 multifieldqa_en 0.2443
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8 hotpotqa 0.2536
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8 2wikimqa 0.2609
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8 {'kv_cache_tokens': 5730304, 'max_concurrency': 174.88, 'kv_cache_gib': 155.4}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_skip0
+(EngineCore pid=547) INFO 11-25 13:16:36 [kv_cache_utils.py:1218] GPU KV cache size: 5,550,080 tokens, Maximum concurrency for 32,768 tokens per request: 169.38x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 3500 10.14
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 32000 62.84
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skip0 450.5
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 multifieldqa_en 0.4924
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 hotpotqa 0.4277
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 2wikimqa 0.3935
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_skip0 {'kv_cache_tokens': 5550080, 'max_concurrency': 169.38, 'kv_cache_gib': 155.4}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=int4_per_token_head
+(EngineCore pid=707) INFO 11-25 13:19:02 [kv_cache_utils.py:1218] GPU KV cache size: 10,744,000 tokens, Maximum concurrency for 32,768 tokens per request: 327.88x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct int4_per_token_head 3500 7.15
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct int4_per_token_head 32000 12.4
+RESULT THRU Qwen/Qwen2.5-7B-Instruct int4_per_token_head 1444.1
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head multifieldqa_en 0.0081
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head hotpotqa 0.0019
+RESULT F1 Qwen/Qwen2.5-7B-Instruct int4_per_token_head 2wikimqa 0.0008
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct int4_per_token_head {'kv_cache_tokens': 10744000, 'max_concurrency': 327.88, 'kv_cache_gib': 155.4}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=turboquant_4bit_nc
+(EngineCore pid=867) INFO 11-25 13:22:02 [kv_cache_utils.py:1218] GPU KV cache size: 7,786,048 tokens, Maximum concurrency for 32,768 tokens per request: 237.61x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 3500 6.23
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 32000 16.93
+RESULT THRU Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 619.3
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc multifieldqa_en 0.4956
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc hotpotqa 0.3564
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 2wikimqa 0.3363
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc {'kv_cache_tokens': 7786048, 'max_concurrency': 237.61, 'kv_cache_gib': 155.4}
+STEP done

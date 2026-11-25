@@ -57,3 +57,30 @@ does not hurt F1 (my probe-based prediction that 27 also needed skipping was wro
 ## Cost
 Droplet created ~16:41 Tashkent; main + calibration + TurboQuant/int4 queues + nightly rerun ~2.9 h, ~$6 of $200.
 One self-inflicted overlap (two engines at once after a re-queue, ~5 min) was killed and the affected arm re-run clean.
+
+## Rerun on vLLM 0.34.1rc1 nightly (`vllm/vllm-openai-rocm:nightly`, torch 2.13 ROCm 10.0), Qwen2.5-7B
+| KV cache | users @32k | ms/tok 3.5k | ms/tok 32k | thru 16x8k | multifieldqa | hotpotqa | 2wikimqa |
+|---|---|---|---|---|---|---|---|
+| bf16 | 87.4 | 4.22 | 4.72 | 1182 | 0.486 | 0.405 | 0.398 |
+| fp8 | 174.9 | 4.28 | 4.64 | 767 | **0.244** | **0.254** | **0.261** |
+| fp8 + skip layer 0 | 169.4 | **10.14** | **62.84** | **451** | 0.492 | 0.428 | 0.394 |
+| int4_per_token_head | 327.9 | 7.15 | 12.40 | 1444 | **0.008** | **0.002** | **0.001** |
+| turboquant_4bit_nc | 237.6 | 6.23 | 16.93 | 619 | 0.496 | 0.356 | 0.336 |
+- The quality failures are NOT fixed on the nightly (fp8 and int4 still collapse on Qwen2.5-7B).
+- NEW REGRESSION: on the nightly the skip-layer remedy decodes 13.6x slower at 32k (62.8 vs 4.6 ms/token; 0.27.1 was
+  4.61) and 16x8k throughput drops to 451. Nightly serves Qwen2 through the Transformers modeling backend; the
+  mixed layer-0 bf16 / layers 1-27 fp8 setup (both ROCM_ATTN) is what slows down.
+- fp8 16x8k throughput on the nightly is 767 vs 1,183 on 0.27.1 (bf16 unchanged, 1,182).
+
+## TurboQuant decode kernel, launch-parameter sweep (tq_decode_tune.py, vLLM 0.27.1, 7B shape Hq 28 / Hk 4 / D 128)
+| case | default (BLOCK_KV 4, 1 warp, 32 splits) | best | speedup | effective KV read |
+|---|---|---|---|---|
+| B=1, 32k | 569 us | 272 us (BLOCK_KV 64, 1 warp, 32 splits) | 2.09x | 31 -> 65 GB/s |
+| B=1, 4k | 69 us | 51 us | 1.34x | 32 -> 43 GB/s |
+| B=16, 8k | 872 us | 805 us | 1.08x | 81 -> 87 GB/s |
+Outputs identical to the default within 1e-4. MI300X HBM is 5.3 TB/s: the kernel reads KV at ~1-2 % of peak.
+Structural causes: grid over query heads (each KV byte read 7x under GQA 28/4), 1 warp per program, bit-gather loads.
+Launch tuning alone gives 2.1x for one long request but almost nothing for batched decode. A GQA-aware rewrite
+(one program per KV head, padded tl.dot over the 7 query heads, as kvquant.fused4 does) is the real fix.
+Honest note: kvquant.fused4 is also far from roofline (381 us per layer at 32k, ~47 GB/s); tuned TurboQuant (272 us)
+is faster today. Kill-test verdict: do not port our kernel; rewrite the TurboQuant decode kernel GQA-aware.
