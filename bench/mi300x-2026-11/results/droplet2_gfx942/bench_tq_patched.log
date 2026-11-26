@@ -1,0 +1,34 @@
+STEP env 0.27.1 2.11.0+gitd0c8b1f 7.2.53211
+
+
+============================ ROCm System Management Interface ============================
+================================== Memory Usage (Bytes) ==================================
+GPU[0]		: VRAM Total Memory (B): 205822885888
+GPU[0]		: VRAM Total Used Memory (B): 299687936
+==========================================================================================
+====================================== Product Info ======================================
+GPU[0]		: get_name, Error when calling libdrm
+GPU[0]		: Card Series: 		N/A
+GPU[0]		: Card Model: 		0x74b5
+GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]		: Card SKU: 		M3000100
+GPU[0]		: Subsystem ID: 	0x74a1
+GPU[0]		: Device Rev: 		0x00
+GPU[0]		: Node ID: 		1
+GPU[0]		: GUID: 		21947
+GPU[0]		: GFX Version: 		gfx942
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=turboquant_4bit_nc
+WARNING 11-25 17:23:59 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=2461) WARNING 11-25 17:24:11 [import_utils.py:408] ValueError: humming.__spec__ is None
+(EngineCore pid=2461) INFO 11-25 17:24:31 [kv_cache_utils.py:2235] GPU KV cache size: 7,860,672 tokens
+(EngineCore pid=2461) INFO 11-25 17:24:31 [kv_cache_utils.py:2236] Maximum concurrency for 32,768 tokens per request: 239.89x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 3500 6.2
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 32000 12.97
+RESULT THRU Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 1426.0
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc multifieldqa_en 0.4996
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc hotpotqa 0.3594
+RESULT F1 Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc 2wikimqa 0.3348
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct turboquant_4bit_nc {'kv_cache_tokens': 7860672, 'max_concurrency': 239.89, 'kv_cache_gib': 154.15}
+STEP done

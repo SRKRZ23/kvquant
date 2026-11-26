@@ -1,0 +1,18 @@
+[
+ {
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "kv": "turboquant_4bit_nc",
+  "decode_ms_per_tok_3500": 6.2,
+  "decode_ms_per_tok_32000": 12.97,
+  "thru_tok_s_16x8k": 1426.0,
+  "f1_multifieldqa_en": 0.4996,
+  "f1_hotpotqa": 0.3594,
+  "f1_2wikimqa": 0.3348,
+  "kv_cache_tokens": 7860672,
+  "max_concurrency_at": 32768,
+  "max_concurrency": 239.89,
+  "kv_cache_gib": 154.15,
+  "returncode": 0,
+  "wall_s": 120
+ }
+]

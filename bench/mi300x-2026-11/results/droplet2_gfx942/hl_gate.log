@@ -1,0 +1,18 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+built {3500: 16, 32640: 16}
+RESULT HL auto 3500 0.9375 {'niah_single': 1.0, 'niah_multikey': 1.0, 'variable_tracking': 0.75, 'common_words': 1.0}
+RESULT HL auto 32640 0.625 {'niah_single': 1.0, 'niah_multikey': 1.0, 'variable_tracking': 0.0, 'common_words': 0.5}
+RESULT GSM8K auto 0.884
+RESULT HL turboquant_4bit_nc 3500 0.9375 {'niah_single': 1.0, 'niah_multikey': 1.0, 'variable_tracking': 0.75, 'common_words': 1.0}
+RESULT HL turboquant_4bit_nc 32640 0.75 {'niah_single': 1.0, 'niah_multikey': 1.0, 'variable_tracking': 0.75, 'common_words': 0.25}
+RESULT GSM8K turboquant_4bit_nc 0.872
+RESULT HL int4_per_token_head_skipb 3500 0.8125 {'niah_single': 1.0, 'niah_multikey': 1.0, 'variable_tracking': 0.25, 'common_words': 1.0}
+RESULT HL int4_per_token_head_skipb 32640 0.5625 {'niah_single': 1.0, 'niah_multikey': 1.0, 'variable_tracking': 0.25, 'common_words': 0.0}
+RESULT GSM8K int4_per_token_head_skipb 0.888
+RESULT HL fp8 3500 0.125 {'niah_single': 0.5, 'niah_multikey': 0.0, 'variable_tracking': 0.0, 'common_words': 0.0}
+RESULT HL fp8 32640 0.0625 {'niah_single': 0.25, 'niah_multikey': 0.0, 'variable_tracking': 0.0, 'common_words': 0.0}
+RESULT GSM8K fp8 0.012
+RESULT HL turboquant_k8v4 3500 0.75 {'niah_single': 1.0, 'niah_multikey': 0.75, 'variable_tracking': 0.25, 'common_words': 1.0}
+RESULT HL turboquant_k8v4 32640 0.625 {'niah_single': 1.0, 'niah_multikey': 1.0, 'variable_tracking': 0.25, 'common_words': 0.25}
+RESULT GSM8K turboquant_k8v4 0.88
+STEP done

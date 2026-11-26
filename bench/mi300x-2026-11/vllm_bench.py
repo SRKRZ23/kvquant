@@ -16,12 +16,12 @@ import os, sys, json, re, string, subprocess, time, zipfile, urllib.request
 from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "vllm_bench_result.json")
+OUT = os.path.join(HERE, os.environ.get("OUTFILE", "vllm_bench_result.json"))
 MODELS = os.environ.get("MODELS", "Qwen/Qwen2.5-7B-Instruct,Qwen/Qwen2.5-72B-Instruct").split(",")
 DTYPES = os.environ.get("DTYPES", "auto,fp8").split(",")
-TASKS = ["multifieldqa_en", "hotpotqa", "2wikimqa"]
+TASKS = os.environ.get("TASKS", "multifieldqa_en,hotpotqa,2wikimqa").split(",")
 N = int(os.environ.get("N", "100"))
-CTX_CAP = 3500
+CTX_CAP = int(os.environ.get("CTX_CAP", "3500"))
 MAXNEW = 64
 INSTR = "Answer the question based only on the text above. Give only the answer, no other words.\nQuestion: "
 
@@ -97,6 +97,10 @@ from vllm import LLM, SamplingParams
 def main():
     model, kv = sys.argv[1], sys.argv[2]
     extra, kvd = {}, kv
+    if kvd.endswith("_vimpl"):  # force vLLM's native model class instead of the Transformers modeling backend
+        extra["model_impl"] = "vllm"; kvd = kvd[:-len("_vimpl")]
+    if os.environ.get("QUANT"):  # online weight quantization, e.g. QUANT=fp8
+        extra["quantization"] = os.environ["QUANT"]
     if kvd.endswith("_aiter"):  # AMD AITER flash-attention backend instead of the default ROCm attention
         extra["attention_backend"] = "ROCM_AITER_FA"; kvd = kvd[:-len("_aiter")]
     if kvd.endswith("_skip0"):  # keep layer 0 (Qwen2 key bias) in bf16, vLLM's documented remedy
@@ -107,7 +111,7 @@ def main():
         extra["kv_cache_dtype_skip_layers"] = [str(i) for i in (0, 1, L - 2, L - 1)]; kvd = kvd[:-len("_skipb")]
     if kvd == "fp8_calib":       # fp8 KV with scales computed from the data (default scale 1.0 is uncalibrated)
         extra["calculate_kv_scales"] = True
-    llm = LLM(model=model, max_model_len=32768, gpu_memory_utilization=0.90,
+    llm = LLM(model=model, max_model_len=int(os.environ.get("MAXLEN", "32768")), gpu_memory_utilization=0.90,
               kv_cache_dtype="fp8" if kvd.startswith("fp8") and kvd != "fp8_per_token_head" else kvd,
               enable_prefix_caching=False, trust_remote_code=False, **extra)
     tok = llm.get_tokenizer()
@@ -115,15 +119,16 @@ def main():
     def gen(prompts, n, greedy=True):
         sp = SamplingParams(max_tokens=n, temperature=0, ignore_eos=True)
         t = time.time(); outs = llm.generate(prompts, sp, use_tqdm=False); return time.time() - t, outs
-    for L in (3500, 32000):
+    for L in (() if os.environ.get("QUALITY_ONLY") else (3500, 32000)):
         p = [{"prompt_token_ids": list(range(1000, 1000 + L))}]
         gen(p, 1); a, _ = gen(p, 1); b, _ = gen(p, 65)
         res[f"decode_ms_per_tok_{L}"] = round((b - a) / 64 * 1000, 2)
         print("RESULT SPEED", model, kv, L, res[f"decode_ms_per_tok_{L}"], flush=True)
-    p = [{"prompt_token_ids": list(range(2000 + i, 2000 + i + 8000))} for i in range(16)]
-    gen(p, 1); a, _ = gen(p, 1); b, _ = gen(p, 129)
-    res["thru_tok_s_16x8k"] = round(16 * 128 / (b - a), 1)
-    print("RESULT THRU", model, kv, res["thru_tok_s_16x8k"], flush=True)
+    if not os.environ.get("QUALITY_ONLY"):
+        p = [{"prompt_token_ids": list(range(2000 + i, 2000 + i + 8000))} for i in range(16)]
+        gen(p, 1); a, _ = gen(p, 1); b, _ = gen(p, 129)
+        res["thru_tok_s_16x8k"] = round(16 * 128 / (b - a), 1)
+        print("RESULT THRU", model, kv, res["thru_tok_s_16x8k"], flush=True)
     sp = SamplingParams(max_tokens=B.MAXNEW, temperature=0)
     for task in B.TASKS:
         items = B.prompts(tok, task, B.N)
@@ -155,7 +160,7 @@ def run_engine(model, kv):
     p.wait()
     res.update(parse_capacity("".join(log)))
     res["returncode"], res["wall_s"] = p.returncode, round(time.time() - t0)
-    open(os.path.join(HERE, f"vllm_{model.split('/')[-1]}_{kv}.log"), "w").write("".join(log))
+    open(os.path.join(HERE, f"vllm_{os.environ.get('TAG', '')}{model.split('/')[-1]}_{kv}.log"), "w").write("".join(log))
     return res
 
 

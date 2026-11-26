@@ -55,7 +55,7 @@ fnuz calibrated: 0.121. K amax 420 (layer 27), 173 (layer 0). Worst layers: 0 (0
 does not hurt F1 (my probe-based prediction that 27 also needed skipping was wrong).
 
 ## Cost
-Droplet created ~16:41 Tashkent; main + calibration + TurboQuant/int4 queues + nightly rerun ~2.9 h, ~$6 of $200.
+Droplet created ~16:41 Tashkent; main + calibration + TurboQuant/int4 queues + nightly rerun + kernel sweep ~1.9 h (16:41-18:35), ~$4 of $200.
 One self-inflicted overlap (two engines at once after a re-queue, ~5 min) was killed and the affected arm re-run clean.
 
 ## Rerun on vLLM 0.34.1rc1 nightly (`vllm/vllm-openai-rocm:nightly`, torch 2.13 ROCm 10.0), Qwen2.5-7B

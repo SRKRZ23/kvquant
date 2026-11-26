@@ -13,7 +13,13 @@ AMD Developer Cloud droplet (vLLM 0.27.1 ROCm image, plus a rerun on the 0.34.1 
 | `fnuz_probe.py` | replays real post-RoPE q/k/v of Qwen2.5-7B through fp8 e4m3fn vs e4m3fnuz on CPU |
 | `tq_decode_tune.py` | times vLLM's TurboQuant decode kernel over launch parameters |
 | `RESULT_VLLM_MI300X_2026-11-25.md` | all vLLM results and findings |
-| `results/` | raw JSON and full vLLM logs |
+| `tq_pr_rocm_bench.py` | runs vLLM's TurboQuant decode op from main and from PRs #69273 / #68834 on ROCm without installing vLLM (sources embedded, imports shimmed) |
+| `tq_decode_pr68834_gfx942.py` | PR #68834's decode op with the grouped path enabled on ROCm (one-line gate change), used for the end-to-end run |
+| `tq_gfx942_tune.py`, `b6_perchannel_grouped.py` | gfx942 launch sweep of the grouped kernel; per-channel int4 (kvquant layout) in a grouped split-K decode kernel |
+| `hl_gate_test.py` | AMD Hyperloom's long-context check (vendored generator, MIT) + GSM8K next to LongBench on the same KV settings |
+| `tco_72b.py`, `TCO_72B_MI300X_vs_H100.md` | users with 32k contexts per GPU-dollar, MI300X vs H100 (arithmetic, labelled) |
+| `openvino/` | the same failure on OpenVINO's CPU KV cache (u4 collapses on Qwen2.5-1.5B, u8 holds) |
+| `results/` | raw JSON and full vLLM logs; `results/droplet2_gfx942/` = Hyperloom-check and PR #68834 runs |
 
 Headline (Qwen2.5-7B, LongBench, 100 questions per task, contexts capped at 3,500 tokens):
 
@@ -26,3 +32,10 @@ Headline (Qwen2.5-7B, LongBench, 100 questions per task, contexts capped at 3,50
 
 Reproduce: `python3 vllm_bench.py` inside a vLLM ROCm container (`DRY=1` checks data, prompts and the log parser
 without a GPU). The notebook scripts run one mode per 30-minute AMD AI Notebooks session (`MODE=...`).
+
+Later results (second droplet, 25 Nov):
+- PR #68834's grouped TurboQuant decode kernel, enabled on gfx942: 5.3x to 7.4x per decode-attention call vs vLLM main
+  (Qwen2.5-7B shape, batch 1 to 32, output within 1.4e-4); end to end 2.41x throughput at 16 x 8k (592 -> 1,426 tok/s,
+  bf16 KV: 1,124) with LongBench unchanged.
+- Hyperloom's quality gate (GSM8K + its RULER-style long-context set) accepts turboquant_4bit_nc, which loses 12-16 % on
+  LongBench hotpotqa / 2wikimqa.

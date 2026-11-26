@@ -1,0 +1,55 @@
+{
+ "model": "Qwen/Qwen2.5-1.5B-Instruct",
+ "N": 25,
+ "cap": 1500,
+ "arms": {
+  "kv_f32": {
+   "props": {
+    "KV_CACHE_PRECISION": "<Type: 'float32'>",
+    "KEY_CACHE_PRECISION": "<Type: 'float32'>",
+    "VALUE_CACHE_PRECISION": "<Type: 'float32'>",
+    "KEY_CACHE_GROUP_SIZE": "0",
+    "INFERENCE_PRECISION_HINT": "<Type: 'float32'>"
+   },
+   "f1_multifieldqa_en": 0.2822,
+   "f1_hotpotqa": 0.3425,
+   "wall_s": 3646
+  },
+  "kv_default": {
+   "props": {
+    "KV_CACHE_PRECISION": "<Type: 'float16'>",
+    "KEY_CACHE_PRECISION": "<Type: 'float16'>",
+    "VALUE_CACHE_PRECISION": "<Type: 'float16'>",
+    "KEY_CACHE_GROUP_SIZE": "0",
+    "INFERENCE_PRECISION_HINT": "<Type: 'float32'>"
+   },
+   "f1_multifieldqa_en": 0.2822,
+   "f1_hotpotqa": 0.3425,
+   "wall_s": 3615
+  },
+  "kv_u8": {
+   "props": {
+    "KV_CACHE_PRECISION": "<Type: 'uint8_t'>",
+    "KEY_CACHE_PRECISION": "<Type: 'uint8_t'>",
+    "VALUE_CACHE_PRECISION": "<Type: 'uint8_t'>",
+    "KEY_CACHE_GROUP_SIZE": "0",
+    "INFERENCE_PRECISION_HINT": "<Type: 'float32'>"
+   },
+   "f1_multifieldqa_en": 0.2822,
+   "f1_hotpotqa": 0.3311,
+   "wall_s": 3612
+  },
+  "kv_u4": {
+   "props": {
+    "KV_CACHE_PRECISION": "<Type: 'float16'>",
+    "KEY_CACHE_PRECISION": "<Type: 'uint4_t'>",
+    "VALUE_CACHE_PRECISION": "<Type: 'uint4_t'>",
+    "KEY_CACHE_GROUP_SIZE": "0",
+    "INFERENCE_PRECISION_HINT": "<Type: 'float32'>"
+   },
+   "f1_multifieldqa_en": 0.0516,
+   "f1_hotpotqa": 0.0667,
+   "wall_s": 3494
+  }
+ }
+}

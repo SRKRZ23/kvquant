@@ -1,0 +1,92 @@
+{
+ "auto": {
+  "hl_3500": {
+   "niah_single": 1.0,
+   "niah_multikey": 1.0,
+   "variable_tracking": 0.75,
+   "common_words": 1.0
+  },
+  "hl_3500_mean": 0.9375,
+  "hl_32640": {
+   "niah_single": 1.0,
+   "niah_multikey": 1.0,
+   "variable_tracking": 0.0,
+   "common_words": 0.5
+  },
+  "hl_32640_mean": 0.625,
+  "gsm8k": 0.884,
+  "wall_s": 211
+ },
+ "turboquant_4bit_nc": {
+  "hl_3500": {
+   "niah_single": 1.0,
+   "niah_multikey": 1.0,
+   "variable_tracking": 0.75,
+   "common_words": 1.0
+  },
+  "hl_3500_mean": 0.9375,
+  "hl_32640": {
+   "niah_single": 1.0,
+   "niah_multikey": 1.0,
+   "variable_tracking": 0.75,
+   "common_words": 0.25
+  },
+  "hl_32640_mean": 0.75,
+  "gsm8k": 0.872,
+  "wall_s": 154
+ },
+ "int4_per_token_head_skipb": {
+  "hl_3500": {
+   "niah_single": 1.0,
+   "niah_multikey": 1.0,
+   "variable_tracking": 0.25,
+   "common_words": 1.0
+  },
+  "hl_3500_mean": 0.8125,
+  "hl_32640": {
+   "niah_single": 1.0,
+   "niah_multikey": 1.0,
+   "variable_tracking": 0.25,
+   "common_words": 0.0
+  },
+  "hl_32640_mean": 0.5625,
+  "gsm8k": 0.888,
+  "wall_s": 268
+ },
+ "fp8": {
+  "hl_3500": {
+   "niah_single": 0.5,
+   "niah_multikey": 0.0,
+   "variable_tracking": 0.0,
+   "common_words": 0.0
+  },
+  "hl_3500_mean": 0.125,
+  "hl_32640": {
+   "niah_single": 0.25,
+   "niah_multikey": 0.0,
+   "variable_tracking": 0.0,
+   "common_words": 0.0
+  },
+  "hl_32640_mean": 0.0625,
+  "gsm8k": 0.012,
+  "wall_s": 191
+ },
+ "turboquant_k8v4": {
+  "hl_3500": {
+   "niah_single": 1.0,
+   "niah_multikey": 0.75,
+   "variable_tracking": 0.25,
+   "common_words": 1.0
+  },
+  "hl_3500_mean": 0.75,
+  "hl_32640": {
+   "niah_single": 1.0,
+   "niah_multikey": 1.0,
+   "variable_tracking": 0.25,
+   "common_words": 0.25
+  },
+  "hl_32640_mean": 0.625,
+  "gsm8k": 0.88,
+  "wall_s": 147
+ }
+}
