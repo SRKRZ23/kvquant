@@ -1,0 +1,48 @@
+STEP env 0.34.1rc1.dev100+gc2cc003c5 2.13.0+rocm10.0.0 7.15.26333
+
+
+============================ ROCm System Management Interface ============================
+================================== Memory Usage (Bytes) ==================================
+GPU[0]		: VRAM Total Memory (B): 205822885888
+GPU[0]		: VRAM Total Used Memory (B): 299687936
+==========================================================================================
+====================================== Product Info ======================================
+GPU[0]		: Card Series: 		AMD Instinct MI300X VF
+GPU[0]		: Card Model: 		0x74b5
+GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]		: Card SKU: 		M3000108
+GPU[0]		: Subsystem ID: 	0x74a1
+GPU[0]		: Device Rev: 		0x00
+GPU[0]		: Node ID: 		1
+GPU[0]		: GUID: 		21947
+GPU[0]		: GFX Version: 		gfx942
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_skip0
+(EngineCore pid=227) INFO 11-26 06:06:22 [kv_cache_utils.py:1218] GPU KV cache size: 5,550,080 tokens, Maximum concurrency for 32,768 tokens per request: 169.38x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 3500 10.09
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 32000 63.01
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skip0 580.2
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 multifieldqa_en 0.4924
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 hotpotqa 0.4277
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 2wikimqa 0.3935
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_skip0 {'kv_cache_tokens': 5550080, 'max_concurrency': 169.38, 'kv_cache_gib': 155.4}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_skip0_vimpl
+(EngineCore pid=387) INFO 11-26 06:08:47 [kv_cache_utils.py:1218] GPU KV cache size: 5,550,080 tokens, Maximum concurrency for 32,768 tokens per request: 169.38x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0_vimpl 3500 10.14
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0_vimpl 32000 63.06
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skip0_vimpl 579.4
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0_vimpl multifieldqa_en 0.4924
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0_vimpl hotpotqa 0.4277
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0_vimpl 2wikimqa 0.3935
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_skip0_vimpl {'kv_cache_tokens': 5550080, 'max_concurrency': 169.38, 'kv_cache_gib': 155.4}
+STEP engine Qwen/Qwen2.5-7B-Instruct kv=fp8_vimpl
+(EngineCore pid=547) INFO 11-26 06:11:07 [kv_cache_utils.py:1218] GPU KV cache size: 5,730,304 tokens, Maximum concurrency for 32,768 tokens per request: 174.88x
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_vimpl 3500 4.24
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_vimpl 32000 4.55
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_vimpl 1244.6
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_vimpl multifieldqa_en 0.2443
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_vimpl hotpotqa 0.2734
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_vimpl 2wikimqa 0.2609
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_vimpl {'kv_cache_tokens': 5730304, 'max_concurrency': 174.88, 'kv_cache_gib': 155.4}
+STEP done

@@ -1,0 +1,38 @@
+# MI300X (gfx942), vllm/vllm-openai-rocm nightly v0.34.1rc1.dev100+gc2cc003c5, Qwen2.5-7B-Instruct, 26 Nov 2026.
+# SPEED <kv> <context> <ms per output token, 1 request>; THRU <kv> <output tok/s, 16 x 8k prompts>; F1 = LongBench 100 q/task.
+# kv: auto = bf16 KV; fp8_skip0 = --kv-cache-dtype fp8 --kv-cache-dtype-skip-layers 0.
+# S5 block 1 = --attention-backend TRITON_ATTN; S5 block 2 = --attention-backend ROCM_AITER_UNIFIED_ATTN.
+# S6 = bf16 KV: default backend (ROCM_ATTN), TRITON_ATTN, TRITON_ATTN with the 64-segment rule enabled on ROCm.
+# S7 = --attention-backend TRITON_ATTN (bf16 KV, then fp8_skip0) with quality. S8 = default backend, bf16 KV.
+# Default backend, fp8_skip0, same image (for comparison): 10.1 ms @3.5k, 63.0 ms @32k, 580 tok/s (vllm_*_fp8_skip0 in this folder).
+SESSION 08:51 S5 nightly: fp8 + skip-layers 0 with other attention backends (speed only)
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 3500 4.28
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 32000 5.84
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skip0 2259.3
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_skip0 {'kv_cache_tokens': 5527552, 'max_concurrency': 168.69, 'kv_cache_gib': 155.4}
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 3500 4.16
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 32000 4.53
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skip0 1043.9
+RESULT CAPACITY Qwen/Qwen2.5-7B-Instruct fp8_skip0 {'kv_cache_tokens': 5525504, 'max_concurrency': 168.62, 'kv_cache_gib': 155.4}
+SESSION 08:56 CHAIN6 DONE
+## S6
+RESULT S6 rocm_attn_default 3500=4.22 32000=4.82 754.4= 
+RESULT S6 triton_before 3500=4.39 32000=7.83 2006.9= 
+RESULT S6 triton_64seg_rocm 3500=4.2 32000=5.35 1993.8= 
+## S7 (TRITON_ATTN)
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct auto 3500 4.37
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct auto 32000 7.75
+RESULT THRU Qwen/Qwen2.5-7B-Instruct auto 1980.9
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto multifieldqa_en 0.4927
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto hotpotqa 0.4145
+RESULT F1 Qwen/Qwen2.5-7B-Instruct auto 2wikimqa 0.3988
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 3500 4.21
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct fp8_skip0 32000 5.77
+RESULT THRU Qwen/Qwen2.5-7B-Instruct fp8_skip0 2253.9
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 multifieldqa_en 0.4892
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 hotpotqa 0.4015
+RESULT F1 Qwen/Qwen2.5-7B-Instruct fp8_skip0 2wikimqa 0.3651
+## S8 (default backend)
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct auto 3500 4.25
+RESULT SPEED Qwen/Qwen2.5-7B-Instruct auto 32000 4.76
+RESULT THRU Qwen/Qwen2.5-7B-Instruct auto 763.0
