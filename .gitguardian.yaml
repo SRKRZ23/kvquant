@@ -1,0 +1,16 @@
+version: 2
+secret:
+  # Benchmark logs contain torch.compile cache directory hashes and AITER kernel build ids (random hex, not credentials).
+  ignored-paths:
+    - "bench/**/results/**"
+    - "bench/**/openvino/*.json"
+  # Public donation addresses in README.md (published on purpose, not secrets).
+  ignored-matches:
+    - name: donation-btc
+      match: bc1q9hm4upksmvkzhl8z3zvxgz94da358qfe3tred0
+    - name: donation-eth
+      match: "0xa9e3b63799f5E5cc6258042D45869a5a1d39F021"
+    - name: donation-tron
+      match: TUyNkMXme1CYAc1wZ8SZ64X9upBc9nwTZ5
+    - name: donation-sol
+      match: j8zZCsWwM8WmUZwMSDHikNuz6E49Vn8nwo9FMQnHSoW
