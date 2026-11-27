@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "kvquant: tested KV-cache quantization for Hugging Face transformers, with MI300X serving benchmarks"
+authors:
+  - family-names: Razikov
+    given-names: Sardor
+    affiliation: Independent Researcher
+    orcid: "https://orcid.org/0009-0007-0731-4247"
+license: MIT
+repository-code: "https://github.com/SRKRZ23/kvquant"
+keywords:
+  - KV cache quantization
+  - LLM inference
+  - vLLM
+  - AMD MI300X
+  - ROCm

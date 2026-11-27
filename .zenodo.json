@@ -1,0 +1,12 @@
+{
+  "title": "kvquant: tested KV-cache quantization for Hugging Face transformers, with MI300X serving benchmarks",
+  "upload_type": "software",
+  "creators": [{"name": "Razikov, Sardor", "affiliation": "Independent Researcher", "orcid": "0009-0007-0731-4247"}],
+  "license": "MIT",
+  "keywords": ["KV cache quantization", "LLM inference", "vLLM", "AMD MI300X", "ROCm", "serving reliability"],
+  "description": "<p>Open-source int8/int4 KV-cache quantization for Hugging Face transformers 5.x with a silent-no-op stress test, plus the November 2026 AMD MI300X benchmark suite: paired LongBench accuracy under vLLM serving load (loadqa.py) and a label-free serving-invariance fuzzer (invfuzz.py) that detects batch-dependent accuracy bugs.</p>",
+  "related_identifiers": [
+    {"identifier": "https://github.com/vllm-project/vllm/pull/70169", "relation": "isSupplementTo", "resource_type": "software"},
+    {"identifier": "10.5281/zenodo.20330468", "relation": "continues", "resource_type": "publication-preprint"}
+  ]
+}
