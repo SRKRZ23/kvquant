@@ -1,5 +1,7 @@
 # kvquant
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24577797.svg)](https://doi.org/10.5281/zenodo.24577797)
+
 **Tested KV-cache quantization for Hugging Face `transformers >= 5` — with a stress test so a silent no-op can't fool you.**
 
 Most "quantize the KV cache" snippets you'll find mutate `cache.key_cache[i]`. On
@@ -164,3 +166,7 @@ debugging, a tip keeps the work going — no obligation.
 ## License
 
 MIT.
+
+## Citation
+
+Razikov, S. (2026). kvquant: tested KV-cache quantization for Hugging Face transformers, with MI300X serving benchmarks. Zenodo. https://doi.org/10.5281/zenodo.24577797
