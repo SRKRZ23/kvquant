@@ -1,0 +1,374 @@
+{
+ "config": "tq4",
+ "kw": {
+  "kv_cache_dtype": "turboquant_4bit_nc"
+ },
+ "model": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+ "usable_probes": 8,
+ "fails": {
+  "solo": [
+   0,
+   8
+  ],
+  "cont_longer_t16": [
+   8,
+   8
+  ],
+  "cont_longer_t300": [
+   8,
+   8
+  ],
+  "cache_longer": [
+   7,
+   8
+  ],
+  "pad_3": [
+   0,
+   8
+  ],
+  "pad_5": [
+   0,
+   8
+  ],
+  "pad_7": [
+   0,
+   8
+  ],
+  "pad_13": [
+   0,
+   8
+  ],
+  "hot_peers": [
+   0,
+   8
+  ],
+  "aged": [
+   0,
+   8
+  ]
+ },
+ "detail": [
+  {
+   "sched": "cont_longer_t16",
+   "probe": 0,
+   "L": 700,
+   "out": "assistant\nThe access code for vault 3 is **6",
+   "spec": {
+    "lens": [
+     3412,
+     700,
+     764
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t300",
+   "probe": 0,
+   "L": 700,
+   "out": "assistant\nIt seems you've shared a passage with repetitive d",
+   "spec": {
+    "lens": [
+     3696,
+     700,
+     764
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cache_longer",
+   "probe": 0,
+   "L": 700,
+   "out": "assistant\nThe access code for vault 3 is **6",
+   "spec": {
+    "lens": [
+     700,
+     700,
+     764
+    ],
+    "prefix_shared": true
+   }
+  },
+  {
+   "sched": "cont_longer_t16",
+   "probe": 1,
+   "L": 1300,
+   "out": "assistant\nThe access code for vault 4 is **2",
+   "spec": {
+    "lens": [
+     2812,
+     1300,
+     1364
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t300",
+   "probe": 1,
+   "L": 1300,
+   "out": "assistant\nIt seems you've provided a record number, an",
+   "spec": {
+    "lens": [
+     3096,
+     1300,
+     1364
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cache_longer",
+   "probe": 1,
+   "L": 1300,
+   "out": "assistant\nIt seems you've provided a repetitive narrative de",
+   "spec": {
+    "lens": [
+     1300,
+     1300,
+     1364
+    ],
+    "prefix_shared": true
+   }
+  },
+  {
+   "sched": "cont_longer_t16",
+   "probe": 2,
+   "L": 1900,
+   "out": "assistant\nThe access code for vault 5 is **1",
+   "spec": {
+    "lens": [
+     2212,
+     1900,
+     1964
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t300",
+   "probe": 2,
+   "L": 1900,
+   "out": "assistant\nIt seems you've provided a record number (5",
+   "spec": {
+    "lens": [
+     2496,
+     1900,
+     1964
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cache_longer",
+   "probe": 2,
+   "L": 1900,
+   "out": "assistant\nThe access code for vault 5 is **1",
+   "spec": {
+    "lens": [
+     1900,
+     1900,
+     1964
+    ],
+    "prefix_shared": true
+   }
+  },
+  {
+   "sched": "cont_longer_t16",
+   "probe": 3,
+   "L": 2600,
+   "out": "assistant\nThe access code for vault 6 is **2",
+   "spec": {
+    "lens": [
+     1512,
+     2600,
+     2664
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t300",
+   "probe": 3,
+   "L": 2600,
+   "out": "assistant\nIt seems you've provided a repetitive narrative an",
+   "spec": {
+    "lens": [
+     1796,
+     2600,
+     2664
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cache_longer",
+   "probe": 3,
+   "L": 2600,
+   "out": "assistant\nI cannot provide the access code for Vault 6",
+   "spec": {
+    "lens": [
+     2600,
+     2600,
+     2664
+    ],
+    "prefix_shared": true
+   }
+  },
+  {
+   "sched": "cont_longer_t16",
+   "probe": 4,
+   "L": 3400,
+   "out": "assistant\nThe access code for vault 7 is **8",
+   "spec": {
+    "lens": [
+     712,
+     3400,
+     3464
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t300",
+   "probe": 4,
+   "L": 3400,
+   "out": "assistant\nThe access code for vault 7 is **8",
+   "spec": {
+    "lens": [
+     996,
+     3400,
+     3464
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cache_longer",
+   "probe": 4,
+   "L": 3400,
+   "out": "assistant\nThe access code for vault 7 is **8",
+   "spec": {
+    "lens": [
+     3400,
+     3400,
+     3464
+    ],
+    "prefix_shared": true
+   }
+  },
+  {
+   "sched": "cont_longer_t16",
+   "probe": 5,
+   "L": 1100,
+   "out": "assistant\nThe access code for vault 8 is **1",
+   "spec": {
+    "lens": [
+     3012,
+     1100,
+     1164
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t300",
+   "probe": 5,
+   "L": 1100,
+   "out": "assistant\nThe access code for vault 8 is **1",
+   "spec": {
+    "lens": [
+     3296,
+     1100,
+     1164
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cache_longer",
+   "probe": 5,
+   "L": 1100,
+   "out": "assistant\nThe access code for vault 8 is **1",
+   "spec": {
+    "lens": [
+     1100,
+     1100,
+     1164
+    ],
+    "prefix_shared": true
+   }
+  },
+  {
+   "sched": "cont_longer_t16",
+   "probe": 6,
+   "L": 2200,
+   "out": "assistant\nThe access code for vault 9 is **9",
+   "spec": {
+    "lens": [
+     1912,
+     2200,
+     2264
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t300",
+   "probe": 6,
+   "L": 2200,
+   "out": "assistant\nIt seems you've provided a repetitive narrative ab",
+   "spec": {
+    "lens": [
+     2196,
+     2200,
+     2264
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t16",
+   "probe": 7,
+   "L": 3000,
+   "out": "assistant\nThe access code for vault 10 is **",
+   "spec": {
+    "lens": [
+     1112,
+     3000,
+     3064
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cont_longer_t300",
+   "probe": 7,
+   "L": 3000,
+   "out": "assistant\nIt seems you've provided a repetitive narrative ab",
+   "spec": {
+    "lens": [
+     1396,
+     3000,
+     3064
+    ],
+    "budget": 4096
+   }
+  },
+  {
+   "sched": "cache_longer",
+   "probe": 7,
+   "L": 3000,
+   "out": "assistant\nThe access code for vault 10 is **",
+   "spec": {
+    "lens": [
+     3000,
+     3000,
+     3064
+    ],
+    "prefix_shared": true
+   }
+  }
+ ]
+}

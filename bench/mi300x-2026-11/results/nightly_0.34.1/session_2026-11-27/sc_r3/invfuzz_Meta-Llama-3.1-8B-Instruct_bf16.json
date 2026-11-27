@@ -1,0 +1,65 @@
+{
+ "config": "bf16",
+ "kw": {},
+ "model": "unsloth/Meta-Llama-3.1-8B-Instruct",
+ "usable_probes": 16,
+ "fails": {
+  "solo": [
+   0,
+   16
+  ],
+  "cont_longer_t16": [
+   0,
+   16
+  ],
+  "cont_longer_t300": [
+   0,
+   16
+  ],
+  "cache_longer": [
+   0,
+   16
+  ],
+  "pad_3": [
+   0,
+   16
+  ],
+  "pad_5": [
+   0,
+   16
+  ],
+  "pad_7": [
+   0,
+   16
+  ],
+  "pad_13": [
+   0,
+   16
+  ],
+  "hot_peers": [
+   1,
+   16
+  ],
+  "aged": [
+   0,
+   16
+  ]
+ },
+ "detail": [
+  {
+   "sched": "hot_peers",
+   "probe": 0,
+   "L": 700,
+   "out": "6677",
+   "spec": {
+    "lens": [
+     700,
+     1500,
+     1500,
+     1500
+    ],
+    "peer": "repeated token"
+   }
+  }
+ ]
+}

@@ -1,0 +1,65 @@
+PHASE 12:28 B1 bit identity
+RESULT PPID single_chunk_2k_ctx_0 equal=True max_abs_diff=0 ms_unpatched=0.313 ms_patched=0.303
+RESULT PPID short_chunk_long_ctx_next_to_long_chunk equal=True max_abs_diff=0 ms_unpatched=51.621 ms_patched=12.831
+RESULT PPID tail_plus_head_chunks equal=True max_abs_diff=0 ms_unpatched=32.520 ms_patched=32.554
+RESULT PPID mixed_decodes_and_prefill equal=True max_abs_diff=0 ms_unpatched=14.424 ms_patched=14.444
+RESULT PPID many_short_chunks_long_ctx equal=True max_abs_diff=0 ms_unpatched=86.388 ms_patched=3.865
+RESULT PPID alibi_short_chunk_long_ctx equal=True max_abs_diff=0 ms_unpatched=9.060 ms_patched=1.643
+PPID_ALL_EQUAL
+PHASE 12:28 B2 upstream test_prefix_prefill with patch
+PATCH_PP patched both kernels /usr/local/lib/python3.14/dist-packages/vllm/v1/attention/ops/prefix_prefill.py
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+406 passed, 64 skipped, 3996 warnings in 1181.93s (0:19:41)
+<sys>:0: DeprecationWarning: builtin type swigvarlink has no __module__ attribute
+PP clean
+PHASE 12:48 A0 baseline TRITON (unpatched)
+[A0_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 30000 131.6 7.6
+[A0_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 30000 130.6 7.65
+[A0_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 30000 120.8 8.28
+[A0_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 30000 470.4 8.5
+[A0_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 30000 415.1 9.64
+[A0_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 30000 367.4 10.89
+[A0_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 1 30000 124.6 8.03
+[A0_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 1 30000 117.9 8.48
+[A0_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 1 30000 129.4 7.73
+[A0_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 4 30000 318.7 12.55
+[A0_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 4 30000 325.9 12.27
+[A0_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 4 30000 319.3 12.53
+[A0_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 1 8000 197.7 5.06
+[A0_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 1 8000 197.6 5.06
+[A0_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 1 8000 198.2 5.05
+[A0_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 4 8000 622.1 6.43
+[A0_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 4 8000 553.9 7.22
+[A0_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 4 8000 623.3 6.42
+PHASE 13:00 A1 PR66485 applied
+patching file vllm/v1/attention/backends/triton_attn.py
+PATCH66485 OK
+[A1_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 30000 194.6 5.14
+[A1_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 30000 192.8 5.19
+[A1_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 30000 199.9 5.0
+[A1_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 30000 533.5 7.5
+[A1_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 30000 552.1 7.24
+[A1_tri_qwen30k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 30000 445.1 8.99
+[A1_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 1 30000 142.5 7.02
+[A1_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 1 30000 172.5 5.8
+[A1_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 1 30000 152.5 6.56
+[A1_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 4 30000 369.7 10.82
+[A1_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 4 30000 344.8 11.6
+[A1_tri_llama30k] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct auto 4 30000 369.2 10.83
+[A1_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 1 8000 204.9 4.88
+[A1_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 1 8000 205.3 4.87
+[A1_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 1 8000 204.7 4.89
+[A1_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 4 8000 623.3 6.42
+[A1_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 4 8000 634.3 6.31
+[A1_tri_llama_fp8] RESULT SWEEP unsloth/Meta-Llama-3.1-8B-Instruct fp8 4 8000 642.0 6.23
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 8000 183.1 5.46
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 8000 223.0 4.48
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 1 8000 223.1 4.48
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 8000 665.3 6.01
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 8000 678.2 5.9
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 4 8000 669.4 5.98
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 16 8000 1929.3 8.29
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 16 8000 2011.3 7.95
+[A1_tri_qwen8k] RESULT SWEEP Qwen/Qwen2.5-7B-Instruct auto 16 8000 2079.3 7.69
+PHASE 13:12 R8_DONE

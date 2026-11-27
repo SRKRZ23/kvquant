@@ -1,0 +1,49 @@
+{
+ "config": "bf16",
+ "kw": {},
+ "model": "unsloth/Meta-Llama-3.1-8B-Instruct",
+ "usable_probes": 8,
+ "fails": {
+  "solo": [
+   0,
+   8
+  ],
+  "cont_longer_t16": [
+   0,
+   8
+  ],
+  "cont_longer_t300": [
+   0,
+   8
+  ],
+  "cache_longer": [
+   0,
+   8
+  ],
+  "pad_3": [
+   0,
+   8
+  ],
+  "pad_5": [
+   0,
+   8
+  ],
+  "pad_7": [
+   0,
+   8
+  ],
+  "pad_13": [
+   0,
+   8
+  ],
+  "hot_peers": [
+   0,
+   8
+  ],
+  "aged": [
+   0,
+   8
+  ]
+ },
+ "detail": []
+}
