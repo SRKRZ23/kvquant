@@ -20,6 +20,9 @@ AMD Developer Cloud droplet (vLLM 0.27.1 ROCm image, plus a rerun on the 0.34.1 
 | `tco_72b.py`, `TCO_72B_MI300X_vs_H100.md` | users with 32k contexts per GPU-dollar, MI300X vs H100 (arithmetic, labelled) |
 | `openvino/` | the same failure on OpenVINO's CPU KV cache (u4 collapses on Qwen2.5-1.5B, u8 holds) |
 | `results/` | raw JSON and full vLLM logs; `results/droplet2_gfx942/` = Hyperloom-check and PR #68834 runs |
+| `servecheck/` | autonomous serving-invariance check: finds answers that change with batch composition, prefix-cache hits or padding (CI-friendly exit code) |
+| `rocm_attn/` | ROCm attention diagnostics: paged-attention kernel microbench, `generate()` profiler, prefix-prefill early-exit patch, bit-identity check, `vllm bench serve` script |
+| `results/nightly_0.34.1/session_2026-11-27/`, `session_2026-11-28/` | servecheck JSON, fix validations, prefix-prefill and split-K runs, raw `vllm bench serve` output |
 
 Headline (Qwen2.5-7B, LongBench, 100 questions per task, contexts capped at 3,500 tokens):
 
@@ -39,3 +42,14 @@ Later results (second droplet, 25 Nov):
   bf16 KV: 1,124) with LongBench unchanged.
 - Hyperloom's quality gate (GSM8K + its RULER-style long-context set) accepts turboquant_4bit_nc, which loses 12-16 % on
   LongBench hotpotqa / 2wikimqa.
+
+Upstream (26 to 28 Nov, vLLM 0.34.1 ROCm nightly, MI300X):
+- Merged: vllm-project/vllm#70169, UltraQuant 4-bit KV now starts on ROCm with automatic backend selection.
+- Open: vllm-project/vllm#70485, the prefix-prefill kernels of the default ROCm backend skip query tiles that have no
+  rows: bit-identical outputs, +26 % requests/s and -39 % mean TTFT in `vllm bench serve` with shared 16K prefixes.
+- Open: vllm-project/vllm#70486, a reference test for Triton split-K attention at 64 segments with contexts up to 32K
+  (asked for in the review of #66485).
+- Validations posted on open fixes: #67789 (TurboQuant/UltraQuant prefill fast path; servecheck flags it on Qwen2.5,
+  Llama-3.1 and Qwen3-30B-A3B, the PR fixes all three), #65820 (online fp8 padding rows; fixed on Llama and the MoE
+  model), #66485 (64 split-KV segments on gfx942: +13 to +49 % batch-1 decode, MI300X and fp8 KV), issue #70172
+  (fp8 KV with skip-layers decodes 4 to 6x slower on the default backend).

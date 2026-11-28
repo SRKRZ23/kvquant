@@ -111,6 +111,12 @@ bf16 at short contexts and slower than a tuned serving kernel such as vLLM's. Fu
 comparison on the same GPU (fp8 at default settings halves Qwen2.5-7B's score; `--kv-cache-dtype-skip-layers 0`
 fixes it) and every script: [`bench/mi300x-2026-11/`](bench/mi300x-2026-11/).
 
+Work upstream from these measurements: vLLM [#70169](https://github.com/vllm-project/vllm/pull/70169) (merged,
+UltraQuant on ROCm), [#70485](https://github.com/vllm-project/vllm/pull/70485) (prefix-prefill kernels skip empty
+query tiles: +26 % requests/s on shared-prefix serving, bit-identical) and
+[#70486](https://github.com/vllm-project/vllm/pull/70486) (64-segment split-K long-context test). The serving check
+that found the batch-dependent bugs is in [`bench/mi300x-2026-11/servecheck/`](bench/mi300x-2026-11/servecheck/).
+
 ## The silent-no-op guard
 
 `kv_ppl_sweep` asserts that int2 both changes the tensors (`change > 0`) **and** wrecks
