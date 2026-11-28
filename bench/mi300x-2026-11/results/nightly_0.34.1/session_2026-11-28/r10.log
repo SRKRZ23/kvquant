@@ -1,0 +1,100 @@
+ENV vllm 0.34.1rc1.dev254+gde7cf7f8c torch 2.13.0+rocm10.0.0
+IMAGE_SHA de7cf7f8c
+PHASE 06:43 T split-K long-context test
+TEST_FILE_READY
+test_tua_long.py: 1920 warnings
+  /usr/local/lib/python3.14/dist-packages/triton/compiler/code_generator.py:643: DeprecationWarning: AnnAssign.__init__ missing 1 required positional argument: 'simple'. This will become an error in Python 3.15.
+    init_node = ast.AnnAssign(target=st_target, value=default_value, annotation=annotation)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============================= slowest 5 durations ==============================
+4.02s call     test_tua_long.py::test_triton_unified_attn_split_k_long_context[None-128-num_heads0-16-seq_lens0]
+0.71s call     test_tua_long.py::test_triton_unified_attn_split_k_long_context[q_dtype1-256-num_heads1-64-seq_lens1]
+0.65s call     test_tua_long.py::test_triton_unified_attn_split_k_long_context[q_dtype1-256-num_heads1-64-seq_lens2]
+0.59s call     test_tua_long.py::test_triton_unified_attn_split_k_long_context[q_dtype1-256-num_heads0-64-seq_lens0]
+0.57s call     test_tua_long.py::test_triton_unified_attn_split_k_long_context[q_dtype1-256-num_heads0-64-seq_lens1]
+48 passed, 1946 deselected, 1922 warnings in 27.52s
+--- 64-segment path sanity: existing short-context decode tests still pass at this commit
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+768 passed, 1226 deselected, 6498 warnings in 94.06s (0:01:34)
+PHASE 06:45 S before (main kernel)
+(EngineCore pid=430) INFO 11-28 06:46:54 [utils.py:418] Backends selected for TransformersForCausalLM (Qwen/Qwen2.5-7B-Instruct):
+(EngineCore pid=430) INFO 11-28 06:46:54 [utils.py:418]   attention |    28 | ROCM_ATTN                | model.layers.[0-27].self_attn.attn
+W1 before 1 | Benchmark duration (s):                  17.66     
+W1 before 1 | Request throughput (req/s):              7.25      
+W1 before 1 | Output token throughput (tok/s):         462.74    
+W1 before 1 | Mean TTFT (ms):                          2843.12   
+W1 before 1 | Median TTFT (ms):                        618.81    
+W1 before 1 | Mean TPOT (ms):                          24.82     
+W2 before 1 | Benchmark duration (s):                  135.78    
+W2 before 1 | Request throughput (req/s):              0.47      
+W2 before 1 | Output token throughput (tok/s):         63.17     
+W2 before 1 | Mean TTFT (ms):                          4730.56   
+W2 before 1 | Median TTFT (ms):                        3256.29   
+W2 before 1 | Mean TPOT (ms):                          219.22    
+W1 before 2 | Benchmark duration (s):                  17.66     
+W1 before 2 | Request throughput (req/s):              7.25      
+W1 before 2 | Output token throughput (tok/s):         463.34    
+W1 before 2 | Mean TTFT (ms):                          3123.13   
+W1 before 2 | Median TTFT (ms):                        835.31    
+W1 before 2 | Mean TPOT (ms):                          20.37     
+W2 before 2 | Benchmark duration (s):                  155.77    
+W2 before 2 | Request throughput (req/s):              0.41      
+W2 before 2 | Output token throughput (tok/s):         52.74     
+W2 before 2 | Mean TTFT (ms):                          5218.43   
+W2 before 2 | Median TTFT (ms):                        3688.64   
+W2 before 2 | Mean TPOT (ms):                          261.55    
+W1 before 3 | Benchmark duration (s):                  19.40     
+W1 before 3 | Request throughput (req/s):              6.60      
+W1 before 3 | Output token throughput (tok/s):         422.34    
+W1 before 3 | Mean TTFT (ms):                          3143.71   
+W1 before 3 | Median TTFT (ms):                        667.50    
+W1 before 3 | Mean TPOT (ms):                          26.96     
+W2 before 3 | Benchmark duration (s):                  129.71    
+W2 before 3 | Request throughput (req/s):              0.49      
+W2 before 3 | Output token throughput (tok/s):         64.81     
+W2 before 3 | Mean TTFT (ms):                          4110.22   
+W2 before 3 | Median TTFT (ms):                        2693.54   
+W2 before 3 | Mean TPOT (ms):                          213.98    
+PHASE 06:57 S after (skip empty tiles)
+PATCH_PP patched both kernels /usr/local/lib/python3.14/dist-packages/vllm/v1/attention/ops/prefix_prefill.py
+(EngineCore pid=1354) INFO 11-28 06:57:38 [utils.py:418] Backends selected for TransformersForCausalLM (Qwen/Qwen2.5-7B-Instruct):
+(EngineCore pid=1354) INFO 11-28 06:57:38 [utils.py:418]   attention |    28 | ROCM_ATTN                | model.layers.[0-27].self_attn.attn
+W1 after 1 | Benchmark duration (s):                  14.06     
+W1 after 1 | Request throughput (req/s):              9.11      
+W1 after 1 | Output token throughput (tok/s):         582.76    
+W1 after 1 | Mean TTFT (ms):                          1913.95   
+W1 after 1 | Median TTFT (ms):                        590.51    
+W1 after 1 | Mean TPOT (ms):                          25.29     
+W2 after 1 | Benchmark duration (s):                  139.62    
+W2 after 1 | Request throughput (req/s):              0.46      
+W2 after 1 | Output token throughput (tok/s):         61.43     
+W2 after 1 | Mean TTFT (ms):                          4246.90   
+W2 after 1 | Median TTFT (ms):                        3461.43   
+W2 after 1 | Mean TPOT (ms):                          229.40    
+W1 after 2 | Benchmark duration (s):                  14.88     
+W1 after 2 | Request throughput (req/s):              8.60      
+W1 after 2 | Output token throughput (tok/s):         546.67    
+W1 after 2 | Mean TTFT (ms):                          2353.73   
+W1 after 2 | Median TTFT (ms):                        862.15    
+W1 after 2 | Mean TPOT (ms):                          21.57     
+W2 after 2 | Benchmark duration (s):                  145.16    
+W2 after 2 | Request throughput (req/s):              0.44      
+W2 after 2 | Output token throughput (tok/s):         56.59     
+W2 after 2 | Mean TTFT (ms):                          4321.12   
+W2 after 2 | Median TTFT (ms):                        3395.62   
+W2 after 2 | Mean TPOT (ms):                          250.44    
+W1 after 3 | Benchmark duration (s):                  12.94     
+W1 after 3 | Request throughput (req/s):              9.89      
+W1 after 3 | Output token throughput (tok/s):         633.11    
+W1 after 3 | Mean TTFT (ms):                          1830.56   
+W1 after 3 | Median TTFT (ms):                        581.34    
+W1 after 3 | Mean TPOT (ms):                          22.17     
+W2 after 3 | Benchmark duration (s):                  130.69    
+W2 after 3 | Request throughput (req/s):              0.49      
+W2 after 3 | Output token throughput (tok/s):         64.33     
+W2 after 3 | Mean TTFT (ms):                          3945.14   
+W2 after 3 | Median TTFT (ms):                        3033.01   
+W2 after 3 | Mean TPOT (ms):                          216.92    
+PHASE 07:07 R10_DONE
